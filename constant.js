@@ -1,0 +1,30 @@
+module.exports = {
+	SITE_TITLE : "Admin", //NodeJs-Express-Mongo
+	SITE_URL : "http://localhost:7000/",
+	//SITE_URL : "http://agency.efrog.in/",
+	PAGING : 10,
+	SMTP_USER: "pk@gmail.com",
+	SMTP_PASS: "9793096616",
+	FROM_EMAIL: "no-reply@efrog.in",
+	
+	INVALID_LOGIN_MSG: "You have entered invalid username or password!",
+	REQUIRED_FIELDS: "Please fill all the fields first!",
+	MSG_EMAIL: "This email does not exist in our database!",
+	MSG_EMAIL_SENT: "An email has been sent to your account!",
+	MSG_SOMETHING_WRONG: "Something went wrong!",
+	PASS_RESET_SUCCESS: "Your password has been reset successfully!",
+	MSG_SAVED_RECORD: "Record has been saved successfully!",
+	MSG_NOT_SAVED: "Record could not be saved!",
+	PASS_NOT_MATCH: "Your old password does not match!",
+	PASS_CHANGE_MSG: "Password has been changed successfully!",
+	CAT_UNIQUE: "This category name already exist!",
+	SUBCAT_UNIQUE: "This sub category name already exist!",
+	UNIQUE_CMS: "This CMS page already exist!",
+	MSG_DELETE: "Record has been deleted successfully!",
+	MSG_NOT_DELETE: "Record could not be deleted!",
+	UNIQUE_FAQ: "This FAQ already exist!",
+	UNIQUE_SKILL: "This skill name already exist!",
+	UNIQUE_TEMP: "This template name already exist!",
+	UNIQUE_EMAIL: "This email already exist!",
+	
+}
