@@ -11,6 +11,9 @@ router.get('/register', login_controller.register);
 router.post('/register', login_controller.register);
 router.get('/dashboard', login_controller.dashboard);
 router.get('/profile', login_controller.profile);
+router.get('/profile/edit', login_controller.profileEdit);
+router.post('/profile/edit', login_controller.profileUpdate);
+router.get('/logout', login_controller.logout);
 
 
 

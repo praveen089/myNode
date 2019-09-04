@@ -13,7 +13,7 @@
       <div class="ks-page-content-body ks-profile">
          <div class="ks-profile-header">
             <div class="ks-profile-header-user">
-               <img src="admin/assets/img/avatars/ava-1.png" class="ks-avatar" width="100" height="100">
+               <img src="/admin/assets/img/avatars/ava-1.png" class="ks-avatar" width="100" height="100">
                <div class="ks-info">
                   <div class="ks-name text-capitalize">Welcome! <%=dataSet.dataUser.name%></div>
                   <div class="ks-description"><%=dataSet.dataUser.email%></div>
@@ -27,16 +27,16 @@
 		    <ul class="nav ks-nav-tabs">
                <li class="nav-item"></li>
             </ul>
-            <div class="tab-content">               
+            <div class="tab-content">              
                <div class="tab-pane active" id="settings" role="tabpanel" aria-expanded="false">
                   <div class="ks-settings-tab">
                      <div class="ks-menu">
                         <ul class="nav nav-pills nav-stacked">
                            <li class="nav-item">
-                              <a class="nav-link active" href="/profile">My Profile</a>
+                              <a class="nav-link" href="/profile">My Profile</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="/profile/edit">Edit Profile</a>
+                              <a class="nav-link active" href="/profile/edit">Edit Profile</a>
                            </li>
                            <li class="nav-item">
                               <a class="nav-link" href="/changepass">Change Password</a>
@@ -47,46 +47,46 @@
                         </ul>
                      </div>
                      <div class="ks-settings-form-wrapper">
-                        <form class="ks-form ks-settings-tab-form">
+                        <form class="form-horizontal" id="edit_form" role="form" action="/profile/edit" method="post">
                            <div class="form-group row">
                               <div class="col-lg-4">
                                  <label>Name</label>
+								 <input type="text" name="name" id="name" class="form-control" value="<%=dataSet.dataUser.name%>" autocomplete="off">
                               </div>
                               <div class="col-lg-4">
-                                 <label><%=dataSet.dataUser.name%></label>
+                                 <label>Mobile</label>
+                                 <input type="text" name="mobile" id="mobile"  class="form-control" value="<%=dataSet.dataUser.mobile%>" autocomplete="off">
                               </div>
                            </div>
                            <div class="form-group row">
                               <div class="col-lg-4">
-                                 <label>Mobile</label>
-                              </div>
-                              <div class="col-lg-4">
-                                 <label><%=dataSet.dataUser.mobile%></label>
-                              </div>
-                           </div>
-						   <div class="form-group row">
-                              <div class="col-lg-4">
                                  <label>Email</label>
+								 <input type="text" name="email" id="email"  class="form-control" value="<%=dataSet.dataUser.email%>" autocomplete="off">	
                               </div>
-                              <div class="col-lg-4">
-                                 <label><%=dataSet.dataUser.email%></label>
-                              </div>
-                           </div>
-						   <div class="form-group row">
                               <div class="col-lg-4">
                                  <label>Address</label>
-                              </div>
-                              <div class="col-lg-4">
-                                 <label><%=dataSet.dataUser.address%></label>
+                                 <input type="text" name="address" id="address"  class="form-control" value="<%=dataSet.dataUser.address%>" autocomplete="off">
                               </div>
                            </div>
-						   <div class="form-group row">
-                              <div class="col-lg-4">
-                                 <label>Created At</label>
+						         <div class="form-group row">
+						            <div class="col-lg-4">
+               							<label>Profile Image</label>
+               							<button class="btn btn-primary ks-btn-file">
+               							<span class="la la-cloud-upload ks-icon"></span>
+               							<span class="ks-text">Choose file</span>
+               							<input type="file"
+               							   data-validation="mime size required"
+               							   data-validation-allowing="jpg, png"
+               							   data-validation-max-size="300kb"
+               							   data-validation-error-msg-required="No image selected">
+               							</button>                                 
+                                 </div>                       
+                           </div>                       
+                           <div class="form-group row">
+                              <div class="col-lg-12">
+                                 <button type="submit" class="btn btn-success">Submit</button>
                               </div>
-                              <div class="col-lg-4">
-                                 <label><%=dataSet.moment(dataSet.dataUser.createdAt).format("MMM-DD-YYYY")%></label>
-                              </div>
+							 <div class="col-lg-12"> <%- include('../message.ejs') %></div>
                            </div>
                         </form>
                      </div>
@@ -97,3 +97,36 @@
       </div>
    </div>
 </div>
+
+<script>
+$.validator.setDefaults({
+	submitHandler: function() {
+		document.forms["edit_form"].submit();
+	}
+});
+
+$("#edit_form").validate({
+	rules: {
+	   name: "required",
+		mobile: "required",
+		email: {
+			required: true,
+			email:true			
+		},
+		username: "required"
+	},
+	messages: {
+		name: "Please enter your name!",
+		mobile: "Please enter your mobile!",
+		email: {
+			required: "Please enter your email address!"                            
+		},
+		username: "Please enter your username!"
+	}
+});
+
+
+setTimeout(function(){ 
+	$(".message-success,.message-error").fadeOut('slow'); 
+}, 3000);
+</script>

@@ -8,6 +8,7 @@ let UserSchema = new Schema({
     password: {type: String, required: true, max: 15},
     status: Number,
     usertype: Number,
+    address: String,
 	createdAt: { type: Date },
 	updatedAt: { type: Date }
 });

@@ -32,7 +32,12 @@ exports.index= function(req, res){
 					 session.mobile = result.mobile;
 					 session.email = result.email;
 					 session.usertype = result.usertype;	
-					 //res.send("Welcome! " +result.name);			 
+					 var rememberme = req.body.rememberme;
+					 if(rememberme){
+					 	res.cookie('username', username);
+					 	res.cookie('password', req.body.password);
+					 }
+					 
 	        		 res.redirect('/dashboard');
 	        	}	
 		       
@@ -80,6 +85,7 @@ exports.register = function (req, res) {  //
             newUser.password = req.body.password;
             newUser.status = 1;
             newUser.usertype = 1;
+            newUser.address = '';
             newUser.createdAt = Date.now();
 		    newUser.updatedAt = Date.now();
 
@@ -126,7 +132,7 @@ exports.profile= function(req, res){
 	var moment = require('moment');
 	//session = req.session;
     let userid = req.session.userid;
-    console.log(userid);
+   // console.log(userid);
     let dataObj = {};
 	dataObj.title = 'Profile - '+constant.SITE_TITLE;
     Login.findById( userid, function(err, result){
@@ -134,7 +140,7 @@ exports.profile= function(req, res){
 				 req.flash('error',constant.MSG_SOMETHING_WRONG);
 				 res.redirect('/');
 			 } else {
-				dataObj.username = result.username;
+				dataObj.username = result.name;
 				dataObj.dataUser = result;
 				//console.log(dataObj.username);
 				dataObj.moment = moment;
@@ -142,8 +148,74 @@ exports.profile= function(req, res){
 			 }
 
     });
+};
 	
+exports.profileEdit = function(req, res){
+	var moment = require('moment');
+	session = req.session;
+	let userid = req.session.userid;
+	let dataObj = {};
+	dataObj.title = 'Edit Profile - '+constant.SITE_TITLE;
+	    Login.findById( userid, function(err, result){		    	
+	    	 if(err){
+					 req.flash('error',constant.MSG_SOMETHING_WRONG);
+					 res.redirect('/');
+				 } else {
+				 	console.log(util.inspect(result, {showHidden: false, depth: null}));
+					dataObj.name = result.name;
+					dataObj.dataUser = result;				
+					dataObj.moment = moment;
+					dataObj.error = req.flash('error');
+					dataObj.success = req.flash('success');
+					res.render('admin/edit', { dataSet: dataObj });				 
+				 }
+
+	    });
 	
 };
+exports.profileUpdate = function(req, res){
+    	//console.log(req.body); 
+    	req.checkBody("name", "Required").notEmpty();
+    	req.checkBody("mobile", "Required").notEmpty();
+    	req.checkBody("email", "Required").notEmpty();
+    	var errors = req.validationErrors();
+    	if(errors){
+    		req.flash('error', constant.REQUIRED_FIELDS);
+    		res.redirect('/profile/edit');
+    	}else{
+	    	var moment = require('moment');
+			session = req.session;
+			let userid = req.session.userid;
+	    	let data = [];
+	    	data.title = 'Edit Profile ';
+	    	if(userid!=''){
+		    	Login.findById( userid, function(err, setdata){	    		
+		    		if(err){
+		    			 req.flash('error',constant.MSG_SOMETHING_WRONG);
+					 	 res.redirect('/');
+		    		}else{
+		    			setdata.name = req.body.name;
+		    			setdata.mobile = req.body.mobile;
+		    			setdata.email = req.body.email;
+		    			setdata.address = req.body.address;	    			
+						session.username = req.body.name;
+						//console.log(util.inspect(setdata, {showHidden: false, depth: null}));
+		    			setdata.save(function(){
+		    				req.flash('success', constant.MSG_SAVED_RECORD);
+		    				res.redirect('/profile/edit');
+		    			});
+		    		}
+		    	});
+	    	}
+
+    	}		
+	
+};
+
+exports.logout = function(req, res){
+	 req.session.destroy();
+  	 res.redirect('/');
+};
+	
 
 
