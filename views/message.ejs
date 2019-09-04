@@ -1,0 +1,24 @@
+<% if ( dataSet.error.length > 0 ) { %>
+<div class="message-error">
+	<table role="presentation" cellpadding="0" cellspacing="0" align="left" border="0">
+	   <tbody>
+		  <tr>
+			 <td>
+				<div>&#9888; <%= dataSet.error %></div>
+			 </td>
+		  </tr>
+	</table>
+</div>
+<% } %>
+<% if ( dataSet.success.length > 0 ) { %>
+<div class="message-success">
+	<table role="presentation" cellpadding="0" cellspacing="0" align="left" border="0">
+	   <tbody>
+		  <tr>
+			 <td>
+				<div>&#10003; <%= dataSet.success %></div>
+			 </td>
+		  </tr>
+	</table>
+</div>
+<% } %>

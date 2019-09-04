@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+   <!-- BEGIN HEAD -->
+   <head>
+      <meta charset="UTF-8">
+      <title><%=dataSet.title%></title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="/admin/libs/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/fonts/line-awesome/css/line-awesome.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/fonts/montserrat/styles.css">
+      <link rel="stylesheet" type="text/css" href="/admin/libs/tether/css/tether.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/libs/jscrollpane/jquery.jscrollpane.css">
+      <link rel="stylesheet" type="text/css" href="/admin/libs/flag-icon-css/css/flag-icon.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/common.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/custom.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/themes/primary.min.css">
+      <link class="ks-sidebar-dark-style" rel="stylesheet" type="text/css" href="/admin/assets/styles/themes/sidebar-black.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/fonts/kosmo/styles.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/fonts/weather/css/weather-icons.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/libs/c3js/c3.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/libs/noty/noty.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/widgets/payment.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/widgets/panels.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/dashboard/tabbed-sidebar.min.css">
+	  <link rel="stylesheet" type="text/css" href="/admin/assets/styles/profile/settings.min.css">
+	  <script src="/admin/libs/jquery/jquery.min.js"></script>
+	  <script src="/admin/js/jquery.validate.min.js"></script>
+   </head>
+   <!-- END HEAD -->
+   <body class="ks-navbar-fixed ks-sidebar-default ks-sidebar-position-fixed ks-page-header-fixed ks-theme-primary">
+      <!-- remove ks-page-header-fixed to unfix header -->
+      <!-- BEGIN HEADER -->
+      <%- include('header.ejs') %>
+      <!-- END HEADER -->
+      <div class="ks-page-container ks-dashboard-tabbed-sidebar-fixed-tabs">
+         <!-- BEGIN DEFAULT SIDEBAR -->
+         <%- include('left_sidebar.ejs') %>
+         <!-- END DEFAULT SIDEBAR -->
+		 
+      </div>
+      <!-- BEGIN PAGE LEVEL PLUGINS -->      
+      <script src="/admin/libs/popper/popper.min.js"></script>
+      <script src="/admin/libs/responsejs/response.min.js"></script>
+      <script src="/admin/libs/loading-overlay/loadingoverlay.min.js"></script>
+      <script src="/admin/libs/tether/js/tether.min.js"></script>
+      <script src="/admin/libs/bootstrap/js/bootstrap.min.js"></script>
+      <script src="/admin/libs/jscrollpane/jquery.jscrollpane.min.js"></script>
+      <script src="/admin/libs/jscrollpane/jquery.mousewheel.js"></script>
+      <script src="/admin/libs/flexibility/flexibility.js"></script>
+      <script src="/admin/libs/noty/noty.min.js"></script>
+      <script src="/admin/libs/velocity/velocity.min.js"></script>
+      <!-- END PAGE LEVEL PLUGINS -->
+      <!-- BEGIN THEME LAYOUT SCRIPTS -->
+      <script src="/admin/assets/scripts/common.js"></script>
+      <!-- END THEME LAYOUT SCRIPTS -->
+      <script src="/admin/libs/d3/d3.min.js"></script>
+      <script src="/admin/libs/c3js/c3.min.js"></script>
+      <script src="/admin/libs/noty/noty.min.js"></script>
+      <script src="/admin/libs/maplace/maplace.min.js"></script>  
+      <script src="/admin/js/jquery.slimscroll.js"></script>
+	  <script>
+	  $('.slimscrollleft').slimScroll({
+		  height: '560px'
+	  });
+	  </script>	  
+      <div class="ks-mobile-overlay"></div>
+   </body>
+</html>

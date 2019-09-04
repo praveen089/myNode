@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Admin Login - <%=dataSet.ttitle%></title>
+      <meta http-equiv="X-UA-Compatible" content=="IE=edge"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" type="text/css" href="/admin/libs/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/fonts/line-awesome/css/line-awesome.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/fonts/open-sans/styles.css">
+      <link rel="stylesheet" type="text/css" href="/admin/libs/tether/css/tether.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/common.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/custom.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/pages/auth.min.css">
+   </head>
+   <body>
+      <div class="ks-page">
+         <div class="ks-page-content">
+            <div class="ks-logo text-uppercase"><%=dataSet.title%></div>			
+         <%- include('../message.ejs') %>
+            <div class="card panel panel-default ks-light ks-panel ks-login">			
+               <div class="card-block">				  
+				  <form class="form-container" id="login_form" role="form" action="/login" method="post">
+                     <h4 class="ks-header">Admin Login</h4>
+                     <div class="form-group">
+                        <div class="input-icon icon-left icon-lg icon-color-primary">
+                           <input class="form-control" type="text" name="username" id="username" required="true" placeholder="Mobile" autocomplete="off" value="">
+                           <span class="icon-addon">
+                           <span class="la la-user ks-icon"></span>
+                           </span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-icon icon-left icon-lg icon-color-primary">
+                           <input class="form-control" type="password" name="password" id="password" required="true" placeholder="Password" autocomplete="off" value="">
+                           <span class="icon-addon">
+                           <span class="la la-key"></span>
+                           </span>
+                        </div>
+                     </div>
+					 <div class="form-group">
+                        <div class="input-icon icon-left icon-lg icon-color-primary">
+                           <div class="custom-control custom-checkbox">
+								<input name="rememberme" id="rememberme" type="checkbox" class="custom-control-input">
+								<label class="custom-control-label" for="rememberme"> Remember me</label>
+							</div>
+                        </div>
+                     </div>					
+                     <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                     </div>
+                     <div class="ks-text">
+                        <a href="/register" class="float-left"> SignUp</a>
+                        <a href="#" class="float-right"> Forgot Password?</a>
+                     </div>                     
+                  </form>
+               </div>
+            </div>
+         </div>
+         <div class="ks-footer">
+            <span class="ks-copyright ks-text-center">&copy; 2018 MyNode all rights reserved.</span>
+         </div>
+      </div>
+	<script src="/admin/libs/jquery/jquery.min.js"></script>
+	<script>	
+	$(".btn-block").click(function(){
+		var username = $.trim($("#username").val());
+		var password = $.trim($("#password").val());
+		if(username == ""){
+			alert("Please enter your username!")
+			$("#username").focus();
+			return false;
+		}
+		if(password == ""){
+			alert("Please enter your password!")
+			$("#password").focus();
+			return false;
+		}
+		document.forms["login_form"].submit();
+	});
+
+	setTimeout(function(){ 
+		$(".message-success,.message-error").fadeOut('slow'); 
+	}, 3000);
+	</script>
+   </body>
+</html>

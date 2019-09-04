@@ -1,0 +1,99 @@
+<%- include('../layout') %>
+<div class="ks-column ks-page">
+   <div class="ks-page-header">
+      <section class="ks-title">
+         <h3>Profile Settings</h3>
+         <div class="ks-controls">
+            <button type="button" class="btn btn-outline-primary ks-light ks-profile-tabs-block-toggle" data-block-toggle=".ks-profile > .ks-tabs-container">Tabs</button>
+            <button type="button" class="btn btn-outline-primary ks-light ks-settings-menu-block-toggle" data-block-toggle=".ks-settings-tab > .ks-menu">Menu</button>
+         </div>
+      </section>
+   </div>
+   <div class="ks-page-content">
+      <div class="ks-page-content-body ks-profile">
+         <div class="ks-profile-header">
+            <div class="ks-profile-header-user">
+               <img src="/assets/img/avatars/ava-1.png" class="ks-avatar" width="100" height="100">
+               <div class="ks-info">
+                  <div class="ks-name text-capitalize">Welcome! <%=dataSet.dataUser.username%></div>
+                  <div class="ks-description"><%=dataSet.dataUser.email%></div>
+                  <div class="ks-rating">
+                     Since: <%=dataSet.moment(dataSet.dataUser.createdAt).format("MMM-DD-YYYY")%>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="ks-tabs-container ks-tabs-default ks-tabs-no-separator ks-full ks-light">
+		    <ul class="nav ks-nav-tabs">
+               <li class="nav-item"></li>
+            </ul>
+            <div class="tab-content">               
+               <div class="tab-pane active" id="settings" role="tabpanel" aria-expanded="false">
+                  <div class="ks-settings-tab">
+                     <div class="ks-menu">
+                        <ul class="nav nav-pills nav-stacked">
+                           <li class="nav-item">
+                              <a class="nav-link active" href="/profile">My Profile</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" href="/profile/edit">Edit Profile</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" href="/changepass">Change Password</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link" href="/logout">Logout</a>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="ks-settings-form-wrapper">
+                        <form class="ks-form ks-settings-tab-form">
+                           <div class="form-group row">
+                              <div class="col-lg-4">
+                                 <label>First Name</label>
+                              </div>
+                              <div class="col-lg-4">
+                                 <label><%=dataSet.dataUser.username%></label>
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <div class="col-lg-4">
+                                 <label>Mobile</label>
+                              </div>
+                              <div class="col-lg-4">
+                                 <label><%=dataSet.dataUser.mobile%></label>
+                              </div>
+                           </div>
+						   <div class="form-group row">
+                              <div class="col-lg-4">
+                                 <label>Email</label>
+                              </div>
+                              <div class="col-lg-4">
+                                 <label><%=dataSet.dataUser.email%></label>
+                              </div>
+                           </div>
+						   <div class="form-group row">
+                              <div class="col-lg-4">
+                                 <label>Username</label>
+                              </div>
+                              <div class="col-lg-4">
+                                 <label>PK</label>
+                              </div>
+                           </div>
+						   <div class="form-group row">
+                              <div class="col-lg-4">
+                                 <label>Created At</label>
+                              </div>
+                              <div class="col-lg-4">
+                                 <label><%=dataSet.moment(dataSet.dataUser.createdAt).format("MMM-DD-YYYY")%></label>
+                              </div>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

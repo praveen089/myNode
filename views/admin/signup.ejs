@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Signup - <%=dataSet.ttitle%></title>
+      <meta http-equiv="X-UA-Compatible" content=="IE=edge"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" type="text/css" href="/admin/libs/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/fonts/line-awesome/css/line-awesome.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/fonts/open-sans/styles.css">
+      <link rel="stylesheet" type="text/css" href="/admin/libs/tether/css/tether.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/common.min.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/custom.css">
+      <link rel="stylesheet" type="text/css" href="/admin/assets/styles/pages/auth.min.css">
+   </head>
+   <body>
+      <div class="ks-page">
+         <div class="ks-page-content">
+            <div class="ks-logo text-uppercase"><%=dataSet.title%></div>			
+         <%- include('../message.ejs') %>
+            <div class="card panel panel-default ks-light ks-panel ks-login">			
+               <div class="card-block">				  
+				  <form class="form-container" id="signup_form" role="form" action="/register" method="post">
+                     <h4 class="ks-header">Enter Your Details for Start</h4>
+                     <div class="form-group">
+                        <div class="input-icon icon-left icon-lg icon-color-primary">
+                           <input class="form-control" type="text" name="name" id="name" required="true" placeholder="Name" autocomplete="off" value="">
+                           <span class="icon-addon">
+                           <span class="la la-user ks-icon"></span>
+                           </span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-icon icon-left icon-lg icon-color-primary">
+                           <input class="form-control" type="text" name="mobile" id="mobile" required="true" placeholder="Mobile" autocomplete="off" maxlength="10" value="">
+                           <span class="icon-addon">
+                           <span class="la la-mobile ks-icon"></span>
+                           </span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-icon icon-left icon-lg icon-color-primary">
+                           <input class="form-control" type="text" name="email" id="email" required="true" placeholder="Email Id" autocomplete="off" value="">
+                           <span class="icon-addon">
+                           <span class="la la-envelope ks-icon"></span>
+                           </span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-icon icon-left icon-lg icon-color-primary">
+                           <input class="form-control" type="password" name="password" id="password" required="true" placeholder="Password" autocomplete="off" value="">
+                           <span class="icon-addon">
+                           <span class="la la-key"></span>
+                           </span>
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="input-icon icon-left icon-lg icon-color-primary">
+                           <input class="form-control" type="password" name="confirm_password" id="confirm_password" required="true" placeholder="Confirm Password" autocomplete="off" value="">
+                           <span class="icon-addon">
+                           <span class="la la-key"></span>
+                           </span>
+                        </div>
+                     </div>
+					 				
+                     <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-block">Signup</button>
+                     </div>
+                     <div class="ks-text-center">
+                        For Login? <a href="/"> Click here</a>
+                     </div>                     
+                  </form>
+               </div>
+            </div>
+         </div>
+         <div class="ks-footer">
+            <span class="ks-copyright ks-text-center">&copy; 2018 MyNode all rights reserved.</span>
+         </div>
+      </div>
+	<script src="/admin/libs/jquery/jquery.min.js"></script>
+	<script>	
+	$(".btn-block").click(function(){
+		var name = $.trim($("#name").val());
+      var mobile = $.trim($("#mobile").val());
+      var email = $.trim($("#email").val());
+		var password = $.trim($("#password").val());
+      var confirm_password = $.trim($("#confirm_password").val());
+		if(name == ""){
+			alert("Please enter your name!")
+			$("#name").focus();
+			return false;
+		}
+      if(mobile == ""){
+         alert("Please enter your mobile!")
+         $("#mobile").focus();
+         return false;
+      }
+      if(email == ""){
+         alert("Please enter your email!")
+         $("#email").focus();
+         return false;
+      }
+		if(password == ""){
+			alert("Please enter your password!")
+			$("#password").focus();
+			return false;
+		}
+      if(confirm_password == ""){
+         alert("Please enter your confirm_password!")
+         $("#confirm_password").focus();
+         return false;
+      }
+		document.forms["signup_form"].submit();
+	});
+
+	setTimeout(function(){ 
+		$(".message-success,.message-error").fadeOut('slow'); 
+	}, 3000);
+	</script>
+   </body>
+</html>
