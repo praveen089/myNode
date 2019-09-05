@@ -135,19 +135,23 @@ exports.profile= function(req, res){
    // console.log(userid);
     let dataObj = {};
 	dataObj.title = 'Profile - '+constant.SITE_TITLE;
-    Login.findById( userid, function(err, result){
-    	if(err){
-				 req.flash('error',constant.MSG_SOMETHING_WRONG);
-				 res.redirect('/');
-			 } else {
-				dataObj.username = result.name;
-				dataObj.dataUser = result;
-				//console.log(dataObj.username);
-				dataObj.moment = moment;
-				res.render('admin/profile', { dataSet: dataObj });				 
-			 }
+	if(userid!=''){
+		Login.findById( userid, function(err, result){
+			//console.log('PK--->'+result.name);
+	    	if(err){
+					 req.flash('error',constant.MSG_SOMETHING_WRONG);
+					 res.redirect('/');
+				 } else {
+					dataObj.username = result.name;
+					dataObj.dataUser = result;
+					//console.log(dataObj.username);
+					dataObj.moment = moment;
+					res.render('admin/profile', { dataSet: dataObj });				 
+				 }
 
-    });
+	    });
+	}
+    
 };
 	
 exports.profileEdit = function(req, res){
@@ -210,6 +214,83 @@ exports.profileUpdate = function(req, res){
 
     	}		
 	
+};
+
+exports.changepass = function(req, res){
+	if(req.method=='POST'){
+		req.checkBody('old_password', "Required").notEmpty();
+		req.checkBody('password', "Required").notEmpty();
+		req.checkBody('c_password', "Required").notEmpty();
+		let errors = req.validationErrors();
+		if(errors){
+			req.flash('error', constant.REQUIRED_FIELDS);
+			res.redirect('/changepass');
+		}else{			
+			session = req.session;
+			let userid = req.session.userid;	    	
+	    	Login.findById( userid, function(err, result){
+	    		let old_password = req.body.old_password;
+	    		if(old_password!= result.password){
+	    			req.flash('error', constant.PASS_NOT_MATCH);
+	    			res.redirect('/changepass');
+	    		}else{
+	    			result.password = req.body.password;
+	    			session.username = req.body.name;
+	    			result.save(function(){
+	    				req.flash('success', constant.PASS_CHANGE_MSG);
+	    				res.redirect('/logout');
+	    			});
+	    		}
+	    	});
+
+		}
+
+	}else{
+		var moment = require('moment');
+		session = req.session;
+		let userid = req.session.userid;
+		let dataObj = {};
+		dataObj.title = 'Change Password - '+constant.SITE_TITLE;
+		    Login.findById( userid, function(err, result){		    	
+		    	 if(err){
+						 req.flash('error',constant.MSG_SOMETHING_WRONG);
+						 res.redirect('/');
+					 } else {
+					 	//console.log(util.inspect(result, {showHidden: false, depth: null}));
+						dataObj.name = result.name;
+						dataObj.dataUser = result;				
+						dataObj.moment = moment;
+						dataObj.error = req.flash('error');
+						dataObj.success = req.flash('success');
+						res.render('admin/changepass', { dataSet: dataObj });				 
+					 }
+
+		    });
+	}
+	
+	
+};
+
+exports.users= function(req, res){
+	session = req.session;
+	var moment = require('moment');
+    let userid = session.userid;   
+    //console.log(session);	
+	let dataObj = {};
+	dataObj.title = 'All Users - '+constant.SITE_TITLE;
+	Login.find( function(err, result){		
+	// console.log(result); return false;	
+    	if(err){
+				 req.flash('error',constant.MSG_SOMETHING_WRONG);
+				 res.redirect('/dashboard');
+			 } else {			
+			 	dataObj.moment = moment;
+			 	dataObj.error = req.flash('error');
+				dataObj.success = req.flash('success');
+				res.render('users/list', { dataSet: dataObj, resultSet:result, moment:moment });				 
+			 }
+
+	    });	 
 };
 
 exports.logout = function(req, res){

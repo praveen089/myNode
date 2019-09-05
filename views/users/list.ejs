@@ -1,0 +1,130 @@
+<%- include('../layout') %>
+<div class="ks-column ks-page" style="margin-left:50px;">
+   <div class="ks-page-header">
+      <section class="ks-title">
+         <h3>List Users</h3>
+         <div class="ks-controls">
+            <nav class="breadcrumb ks-default">
+               <a class="breadcrumb-item ks-breadcrumb-icon" href="/dashboard">
+               <span class="la la-home ks-icon"></span>
+               </a>
+               <a href="/users" class="breadcrumb-item">Users</a>
+               <span class="breadcrumb-item active" href="#">List</span>
+            </nav>
+         </div>
+      </section>
+   </div>
+   <div class="ks-page-content">
+	   <div class="ks-page-content-body ks-content-nav">
+		  <div class="ks-nav-body">
+		  <%- include('../message.ejs') %>
+			 <div class="ks-nav-body-wrapper">
+			    <form class="form-inline text-left search-form" method="get">
+					<div class="pull-left keyword-div">Search User: </div>
+					<input type="text" class="form-control" id="keyword" name="keyword" placeholder="Enter title, firstname, lastname, or email..." autocomplete="off" <% if(dataSet.keyword) { %>value="<%=dataSet.keyword%>"<% } %>>
+					<input type="text" class="form-control" id="location" name="location" placeholder="Enter suburb, city or state..." autocomplete="off" <% if(dataSet.location) { %>value="<%=dataSet.location%>"<% } %>>
+				  
+				  <button type="submit" class="btn btn-primary mb-2" onclick="return searchUser();">Search</button>
+				  <a href="/admin/users/list" class="btn btn-success mb-2">Reset</a>
+				</form>
+				<div class="container-fluid">
+				   <table id="ks-datatable" class="table table-striped table-bordered" width="100%">
+					  <thead>
+						<tr>
+						  <th></th>
+						  <th>Name</th>
+						  <th>Email</th>
+						  <th>City</th>								  
+						  <th>Created At</th>
+						  <th class="text-center">Status</th>
+						  <th class="text-center">Actions</th>
+					   </tr>
+					  </thead>
+					  <tbody>
+						 <% if(resultSet.length > 0) { for(var i=0; i < resultSet.length; i++) { %>
+						   <tr>
+							  <td>
+							  <a href="/admin/users/view/<%=resultSet[i]._id%>" title="View Detail">
+							  <% if(resultSet[i].image) { %>
+								<img src="../../uploads/users/<%=resultSet[i].image%>" class="thumb-sm img-circle" alt="<%=resultSet[i].name%>" style="height: 50px;width: 50px;border-radius: 100%;">
+							  <% } else { %>
+								 <img src="../../admin/images/happy.png" class="thumb-sm img-circle" alt="<%=resultSet[i].name%>" style="height: 50px;width: 50px;border-radius: 100%;">
+							  <% } %>
+							  </a>
+							  </td>
+							  <td><a href="/admin/users/view/<%=resultSet[i]._id%>" title="View Detail">
+								  <h5 class="m-0 text-capitalize"><%=resultSet[i].name%> <%=resultSet[i].mobile%></h5>
+								  <p class="m-0 text-muted font-13 text-capitalize"><small><% if(resultSet[i].title) { %><%=resultSet[i].title%><% } else { %>N/A<% } %></small></p>
+								  </a>
+							   </td>
+							  <td><%=resultSet[i].email%></td>
+							  <td class="text-capitalize"><% if(resultSet[i].cityname) { %><%=resultSet[i].cityname%><% } else { %>N/A<% } %></td>							 
+							  <td><%=moment(resultSet[i].createdAt).format("MMM-DD-YYYY")%></td>
+							  <% if(resultSet[i].status == 1) { %>
+							  <td class="text-center">Active</td>
+							  <% } else { %>
+							  <td class="text-center">Inactive</td>
+							  <% } %>
+							  <td class="text-center">
+								  <a href="/admin/users/view/<%=resultSet[i]._id%>" title="Details">View</a> 
+								  <a href="/admin/users/delete/<%=resultSet[i]._id%>" title="Delete" onclick="return confirm('Are you sure to delete this record?');">Delete</a>
+							  </td>
+						   </tr>
+						   <% } %>
+						   <tr class="text-right">
+						   <td colspan="7">
+						  
+						   </td></tr>
+						   <% } else { %>
+						   <tr><td colspan="7" class="text-center">No record available!</td></tr>
+						   <% } %>
+					  </tbody>
+				   </table>
+				</div>
+			 </div>
+		  </div>
+	   </div>
+	</div>
+</div>
+<script>
+setTimeout(function(){ 
+	$(".message-success,.message-error").fadeOut('slow'); 
+}, 3000);
+</script>
+
+<script>
+function searchUser(){
+	var keyword = $.trim($("#keyword").val());
+	var location = $.trim($("#location").val());
+	if(keyword == "" && location == ""){
+	    alert("Please fill data in at least one text box!");
+		$("#keyword").focus();
+		return false;
+	}
+}
+</script>
+<link rel="stylesheet" href="/admin/autocomplete/auto-complete.css">
+<script src="/admin/autocomplete/auto-complete.js"></script>
+<script>
+	var demo1 = new autoComplete({
+		selector: '#location',
+		minChars: 1,
+		source: function(term, suggest){
+			var keyword = $("#location").val();
+			$.ajax({
+			  url: "/admin/users/getlocation/"+keyword,
+			  type: "GET"
+			}).done(function(resp) {			
+				var suggestions = [];
+				for (i=0; i < resp.locationData.length; i++){
+					suggestions.push(resp.locationData[i].location);
+					suggest(suggestions);
+				}
+			}).fail(function() {
+				console.log("error");
+			});		
+		}
+	});
+
+   
+</script>

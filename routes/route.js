@@ -13,6 +13,9 @@ router.get('/dashboard', login_controller.dashboard);
 router.get('/profile', login_controller.profile);
 router.get('/profile/edit', login_controller.profileEdit);
 router.post('/profile/edit', login_controller.profileUpdate);
+router.get('/changepass', login_controller.changepass);
+router.post('/changepass', login_controller.changepass);
+router.get('/users', login_controller.users);
 router.get('/logout', login_controller.logout);
 
 

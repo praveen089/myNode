@@ -1,0 +1,495 @@
+<% layout('../layout') -%>
+<link rel="stylesheet" type="text/css" href="/admin/assets/styles/profile/settings.min.css">
+<div class="ks-column ks-page">
+   <div class="ks-page-header">
+      <section class="ks-title">
+         <h3>Users Details</h3>
+         <div class="ks-controls">
+            <nav class="breadcrumb ks-default">
+               <a class="breadcrumb-item ks-breadcrumb-icon" href="/admin/dashboard">
+               <span class="la la-home ks-icon"></span>
+               </a>
+               <a href="/admin/users/list" class="breadcrumb-item">Users</a>
+               <span class="breadcrumb-item active" href="#">Details</span>
+            </nav>
+         </div>
+      </section>
+   </div>
+   <div class="ks-page-content">
+      <div class="ks-page-content-body ks-profile">
+         <div class="ks-profile-header">
+            <div class="ks-profile-header-user">
+			   <% if(dataUser.image) { %>
+					<img src="../../../uploads/users/<%=dataUser.image%>" class="ks-avatar" width="100" height="100" alt="<%=dataUser.firstname%>">
+				<% } else { %>
+					<img src="../../../admin/images/happy.png" class="ks-avatar" width="100" height="100" alt="<%=dataUser.firstname%>">
+				<% } %>
+               <div class="ks-info">
+                  <div class="ks-name text-capitalize"><%=dataUser.firstname%> <%=dataUser.lastname%></div>
+                  <div class="ks-description text-capitalize"><% if(dataUser.cityname) { %><%=dataUser.cityname%><% } else { %>City<% } %>, <% if(dataUser.countryname) { %><%=dataUser.countryname%><% } else { %>Country<% } %></div>
+                  <div class="ks-rating">
+                     <i class="la la-star ks-star" aria-hidden="true"></i>
+                     <i class="la la-star ks-star" aria-hidden="true"></i>
+                     <i class="la la-star ks-star" aria-hidden="true"></i>
+                     <i class="la la-star ks-star" aria-hidden="true"></i>
+                     <i class="la la-star-half-o ks-star" aria-hidden="true"></i>
+                  </div>
+               </div>
+            </div>
+            <div class="ks-profile-header-statistics">
+               <div class="ks-item">
+                  <div class="ks-amount">869</div>
+                  <div class="ks-text">projects</div>
+               </div>
+               <div class="ks-item">
+                  <div class="ks-amount">131</div>
+                  <div class="ks-text">skills</div>
+               </div>
+               <div class="ks-item">
+                  <div class="ks-amount">$3,004</div>
+                  <div class="ks-text">earn</div>
+               </div>
+            </div>
+         </div>
+         <div class="ks-tabs-container ks-tabs-default ks-tabs-no-separator ks-full ks-light">
+            <ul class="nav ks-nav-tabs">
+               <li class="nav-item"></li>
+            </ul>
+            <div class="tab-content">
+               <div class="tab-pane active" id="settings" role="tabpanel" aria-expanded="false">
+                  <div class="ks-settings-tab">
+                     <div class="ks-menu">
+                        <ul class="nav nav-pills nav-stacked">
+                           <li class="nav-item">
+                              <a class="nav-link active basic-info">Basic Info</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link contact-info">Contact Info</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link skills">Skills</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link indust-categ">Industries & Categories</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link projects">Projects</a>
+                           </li>
+                           <li class="nav-item">
+                              <a class="nav-link availability">Availability</a>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="ks-settings-form-wrapper">
+                        <div class="card panel panel-default ks-information ks-light" id="basic-info">
+						   <h5 class="card-header">
+							  <span class="ks-text">Basic Information</span>
+						   </h5>
+						   <div class="card-block ks-payment-methods">
+							  <div class="ks-manage-payment">
+								 <form>
+									<div class="form-group row">
+									   <div class="col-lg-12">
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Member Type</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label class="text-capitalize">Free</label>
+											 </div>											 
+										  </div>
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>First Name</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label class="text-capitalize"><%=dataUser.firstname%></label>
+											 </div>											 
+										  </div>
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Last Name</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label class="text-capitalize"><%=dataUser.lastname%></label>
+											 </div>											 
+										  </div>
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Email</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label><%=dataUser.email%></label>
+											 </div>											 
+										  </div>
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Created At</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label><%=moment(dataUser.createdAt).format("MMM-DD-YYYY")%></label>
+											 </div>											 
+										  </div>
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Modified At</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label><%=moment(dataUser.modifiedAt).format("MMM-DD-YYYY")%></label>
+											 </div>											 
+										  </div>
+									   </div>
+									</div>
+								 </form>
+							  </div>
+						   </div>
+						</div>
+						<div class="card panel panel-default ks-information ks-light" id="contact-info" style="display:none;margin-top:0px;">
+						   <h5 class="card-header">
+							  <span class="ks-text">Contact Information</span>
+						   </h5>
+						   <div class="card-block ks-payment-methods">
+							  <div class="ks-manage-payment">
+								 <form>
+									<div class="form-group row">
+									   <div class="col-lg-12">
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Email</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label><% if(dataUser.email) { %><%=dataUser.email%><% } else { %>N/A<% } %></label>
+											 </div>											 
+										  </div>
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Mobile</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label><% if(dataUser.mobile) { %><%=dataUser.mobile%><% } else { %>N/A<% } %></label>
+											 </div>											 
+										  </div>
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Location</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label><% if(dataUser.location) { %><%=dataUser.location%><% } else { %>N/A<% } %></label>
+											 </div>											 
+										  </div>
+									   </div>
+									</div>
+								 </form>
+							  </div>
+						   </div>
+						</div>
+						<div class="card panel panel-default ks-information ks-light" id="skills" style="display:none;margin-top:0px;">
+						   <h5 class="card-header">
+							  <span class="ks-text">Skills Information</span>
+						   </h5>
+						   <div class="card-block ks-payment-methods">
+							  <div class="ks-manage-payment">
+								 <form>
+									<div class="form-group row">
+									   <div class="col-lg-12">
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Skills</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label><% if(dataUser.skills) { %><%=dataUser.skills%><% } else { %>N/A<% } %></label>
+											 </div>											 
+										  </div>
+										  
+									   </div>
+									</div>
+								 </form>
+							  </div>
+						   </div>
+						</div>
+						<div class="card panel panel-default ks-information ks-light" id="indust-cat" style="display:none;margin-top:0px;">
+						   <h5 class="card-header">
+							  <span class="ks-text">Industries & Categories</span>
+						   </h5>
+						   <div class="card-block ks-payment-methods">
+							  <div class="ks-manage-payment">
+								 <form>
+									<div class="form-group row">
+									   <div class="col-lg-12">
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Industries</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label><% if(dataUser.industries) { %><%=dataUser.industries%><% } else { %>N/A<% } %></label>
+											 </div>											 
+										  </div>
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Categories</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label><% if(dataUser.categories) { %><%=dataUser.categories%><% } else { %>N/A<% } %></label>
+											 </div>											 
+										  </div>										 
+									   </div>
+									</div>
+								 </form>
+							  </div>
+						   </div>
+						</div>
+						<div class="card panel panel-default ks-information ks-light" id="projects" style="display:none;margin-top:0px;">
+						   <h5 class="card-header">
+							  <span class="ks-text">Projects List</span>
+						   </h5>
+						   <div class="card-block ks-payment-methods">
+							  <div class="ks-scroll-wrapper ks-rows-section">
+							       <div class="row">
+									  <div class="col-xl-4 col-lg-12 mb-10">
+										 <div class="card panel panel-default ks-project">
+											<div class="ks-project-header">
+											   <img src="../../images/dummy-portfolio.jpg" width="202" height="130">
+											</div>
+											<div class="ks-project-body">
+											   <div class="project-title"><b>Project Title:</b> Grosshopper</div>
+											   <div class="ks-description">
+												  <b>Description:</b> Google is an American multinational technology company specializing in…
+											   </div>
+											   <div class="skills-used"><b>Skills:</b> php,mysql, css, html5</div><br>
+                                               <div class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-example-modal-horizontal-form">See More</button></div>											   
+											</div>
+										 </div>
+									  </div>
+									  <div class="col-xl-4 col-lg-12 mb-10">
+										 <div class="card panel panel-default ks-project">
+											<div class="ks-project-header">
+											   <img src="../../images/dummy-portfolio.jpg" width="202" height="130">
+											</div>
+											<div class="ks-project-body">
+											   <div class="project-title"><b>Project Title:</b> Grosshopper</div>
+											   <div class="ks-description">
+												  <b>Description:</b> Google is an American multinational technology company specializing in…
+											   </div>
+											   <div class="skills-used"><b>Skills:</b> php,mysql, css, html5</div><br><div class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-example-modal-horizontal-form">See More</button></div>											   
+											</div>
+										 </div>
+									  </div>
+									  <div class="col-xl-4 col-lg-12 mb-10">
+										 <div class="card panel panel-default ks-project">
+											<div class="ks-project-header">
+											   <img src="../../images/dummy-portfolio.jpg" width="202" height="130">
+											</div>
+											<div class="ks-project-body">
+											   <div class="project-title"><b>Project Title:</b> Grosshopper</div>
+											   <div class="ks-description">
+												  <b>Description:</b> Google is an American multinational technology company specializing in…
+											   </div>
+											   <div class="skills-used"><b>Skills:</b> php,mysql, css, html5</div><br><div class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-example-modal-horizontal-form">See More</button></div>											   
+											</div>
+										 </div>
+									  </div>
+									  <div class="col-xl-4 col-lg-12 mb-10">
+										 <div class="card panel panel-default ks-project">
+											<div class="ks-project-header">
+											   <img src="../../images/dummy-portfolio.jpg" width="202" height="130">
+											</div>
+											<div class="ks-project-body">
+											   <div class="project-title"><b>Project Title:</b> Grosshopper</div>
+											   <div class="ks-description">
+												  <b>Description:</b> Google is an American multinational technology company specializing in…
+											   </div>
+											   <div class="skills-used"><b>Skills:</b> php,mysql, css, html5</div><br><div class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-example-modal-horizontal-form">See More</button></div>											   
+											</div>
+										 </div>
+									  </div>
+									  <div class="col-xl-4 col-lg-12 mb-10">
+										 <div class="card panel panel-default ks-project">
+											<div class="ks-project-header">
+											   <img src="../../images/dummy-portfolio.jpg" width="202" height="130">
+											</div>
+											<div class="ks-project-body">
+											   <div class="project-title"><b>Project Title:</b> Grosshopper</div>
+											   <div class="ks-description">
+												  <b>Description:</b> Google is an American multinational technology company specializing in…
+											   </div>
+											   <div class="skills-used"><b>Skills:</b> php,mysql, css, html5</div><br><div class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-example-modal-horizontal-form">See More</button></div>											   
+											</div>
+										 </div>
+									  </div>
+									  
+									  <div class="col-xl-4 col-lg-12 mb-10">
+										 <div class="card panel panel-default ks-project">
+											<div class="ks-project-header">
+											   <img src="../../images/dummy-portfolio.jpg" width="202" height="130">
+											</div>
+											<div class="ks-project-body">
+											   <div class="project-title"><b>Project Title:</b> Grosshopper</div>
+											   <div class="ks-description">
+												  <b>Description:</b> Google is an American multinational technology company specializing in…
+											   </div>
+											   <div class="skills-used"><b>Skills:</b> php,mysql, css, html5</div><br><div class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-example-modal-horizontal-form">See More</button></div>											   
+											</div>
+										 </div>
+									  </div>
+								   </div>								   
+								</div>
+						   </div>
+						</div>
+						<div class="card panel panel-default ks-information ks-light" id="availability" style="display:none;margin-top:0px;">
+						   <h5 class="card-header">
+							  <span class="ks-text">Availability</span>
+						   </h5>
+						   <div class="card-block ks-payment-methods">
+							  <div class="ks-manage-payment">
+								 <form>
+									<div class="form-group row">
+									   <div class="col-lg-12">
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Monday - Friday</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label class="text-capitalize">9:30 AM - 6:30 PM</label>
+											 </div>											 
+										  </div>
+										  <div class="row">
+											 <div class="col-lg-4">
+												<label><b>Saturday - Sunday</b></label>
+											 </div>
+											 <div class="col-lg-4">
+												<label class="text-capitalize">12:30 AM - 6:30 PM</label>
+											 </div>											 
+										  </div>
+									   </div>
+									</div>
+								 </form>
+							  </div>
+						   </div>
+						</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="modal fade bd-example-modal-horizontal-form" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Project Detail</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-close"></span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="container-fluid">
+               <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Title</label>
+                  <div class="col-10">
+                    <label for="example-text-input" class="col-10 col-form-label">Title</label>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="example-search-input" class="col-2 col-form-label">Description</label>
+                  <div class="col-10">
+                     <label for="example-text-input" class="col-10 col-form-label">description</label>
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Industry</label>
+                  <div class="col-10">
+                    <label for="example-text-input" class="col-10 col-form-label">industry name</label>
+                  </div>
+               </div>
+			   <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Category</label>
+                  <div class="col-10">
+                    <label for="example-text-input" class="col-10 col-form-label">category</label>
+                  </div>
+               </div>
+			   <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Skills</label>
+                  <div class="col-10">
+                    <label for="example-text-input" class="col-10 col-form-label">skill here</label>
+                  </div>
+               </div>
+			   <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Tags</label>
+                  <div class="col-10">
+                    <label for="example-text-input" class="col-10 col-form-label">tag here</label>
+                  </div>
+               </div>
+			   <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Project Url</label>
+                  <div class="col-10">
+                    <label for="example-text-input" class="col-10 col-form-label">project url here</label>
+                  </div>
+               </div>
+			   <div class="form-group row">
+                  <label for="example-text-input" class="col-2 col-form-label">Cover Image</label>
+                  <div class="col-10">
+                    <label for="example-text-input" class="col-10 col-form-label">image here</label>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script src="/admin/libs/jquery/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$(".basic-info").click(function(){
+		$("#basic-info").fadeIn();
+		$("#contact-info").fadeOut();
+		$("#skills").fadeOut();
+		$("#indust-cat").fadeOut();
+		$("#projects").fadeOut();
+		$("#availability").fadeOut();
+	});
+	$(".contact-info").click(function(){
+		$("#basic-info").fadeOut();
+		$("#contact-info").fadeIn();
+		$("#skills").fadeOut();
+		$("#indust-cat").fadeOut();
+		$("#projects").fadeOut();
+		$("#availability").fadeOut();
+	});
+	$(".skills").click(function(){
+		$("#basic-info").fadeOut();
+		$("#contact-info").fadeOut();
+		$("#skills").fadeIn();
+		$("#indust-cat").fadeOut();
+		$("#projects").fadeOut();
+		$("#availability").fadeOut();
+	});
+	$(".indust-categ").click(function(){
+		$("#basic-info").fadeOut();
+		$("#contact-info").fadeOut();
+		$("#skills").fadeOut();
+		$("#indust-cat").fadeIn();
+		$("#projects").fadeOut();
+		$("#availability").fadeOut();
+	});
+	$(".projects").click(function(){
+		$("#basic-info").fadeOut();
+		$("#contact-info").fadeOut();
+		$("#skills").fadeOut();
+		$("#indust-cat").fadeOut();
+		$("#projects").fadeIn();
+		$("#availability").fadeOut();
+	});
+	$(".availability").click(function(){
+		$("#basic-info").fadeOut();
+		$("#contact-info").fadeOut();
+		$("#skills").fadeOut();
+		$("#indust-cat").fadeOut();
+		$("#projects").fadeOut();
+		$("#availability").fadeIn();
+	});
+});
+</script>

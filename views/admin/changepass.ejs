@@ -13,7 +13,7 @@
       <div class="ks-page-content-body ks-profile">
          <div class="ks-profile-header">
             <div class="ks-profile-header-user">
-               <img src="admin/assets/img/avatars/ava-1.png" class="ks-avatar" width="100" height="100">
+               <img src="/admin/assets/img/avatars/ava-1.png" class="ks-avatar" width="100" height="100">
                <div class="ks-info">
                   <div class="ks-name text-capitalize">Welcome! <%=dataSet.dataUser.name%></div>
                   <div class="ks-description"><%=dataSet.dataUser.email%></div>
@@ -27,19 +27,19 @@
 		    <ul class="nav ks-nav-tabs">
                <li class="nav-item"></li>
             </ul>
-            <div class="tab-content">               
+            <div class="tab-content">              
                <div class="tab-pane active" id="settings" role="tabpanel" aria-expanded="false">
                   <div class="ks-settings-tab">
                      <div class="ks-menu">
                         <ul class="nav nav-pills nav-stacked">
                            <li class="nav-item">
-                              <a class="nav-link active" href="/profile">My Profile</a>
+                              <a class="nav-link" href="/profile">My Profile</a>
                            </li>
                            <li class="nav-item">
                               <a class="nav-link" href="/profile/edit">Edit Profile</a>
                            </li>
                            <li class="nav-item">
-                              <a class="nav-link" href="/changepass">Change Password</a>
+                              <a class="nav-link active" href="/changepass">Change Password</a>
                            </li>
                            <li class="nav-item">
                               <a class="nav-link" href="/logout">Logout</a>
@@ -47,46 +47,28 @@
                         </ul>
                      </div>
                      <div class="ks-settings-form-wrapper">
-                        <form class="ks-form ks-settings-tab-form">
+                        <form class="form-horizontal" id="changepass_form" role="form" action="/changepass" method="post">
                            <div class="form-group row">
                               <div class="col-lg-4">
-                                 <label>Name</label>
+                                 <label>Old Password</label>
+								 <input type="password" name="old_password" id="old_password" class="form-control" autocomplete="off">
                               </div>
                               <div class="col-lg-4">
-                                 <label><%=dataSet.dataUser.name%></label>
+                                 <label>New Password</label>
+                                 <input type="password" name="password" id="password" class="form-control" autocomplete="off">
                               </div>
                            </div>
                            <div class="form-group row">
                               <div class="col-lg-4">
-                                 <label>Mobile</label>
+                                 <label>Confirm Password</label>
+								 <input type="password" name="c_password" id="c_password" class="form-control" autocomplete="off">	
+                              </div>                              
+                           </div>                       
+                           <div class="form-group row">
+                              <div class="col-lg-12">
+                                 <button type="submit" class="btn btn-success">Submit</button>
                               </div>
-                              <div class="col-lg-4">
-                                 <label><%=dataSet.dataUser.mobile%></label>
-                              </div>
-                           </div>
-						   <div class="form-group row">
-                              <div class="col-lg-4">
-                                 <label>Email</label>
-                              </div>
-                              <div class="col-lg-4">
-                                 <label><%=dataSet.dataUser.email%></label>
-                              </div>
-                           </div>
-						   <div class="form-group row">
-                              <div class="col-lg-4">
-                                 <label>Address</label>
-                              </div>
-                              <div class="col-lg-4">
-                                 <label><%=dataSet.dataUser.address%></label>
-                              </div>
-                           </div>
-						   <div class="form-group row">
-                              <div class="col-lg-4">
-                                 <label>Created At</label>
-                              </div>
-                              <div class="col-lg-4">
-                                 <label><%=dataSet.moment(dataSet.dataUser.createdAt).format("MMM-DD-YYYY")%></label>
-                              </div>
+							        <div class="col-lg-12"> <%- include('../message.ejs') %></div>
                            </div>
                         </form>
                      </div>
@@ -97,3 +79,40 @@
       </div>
    </div>
 </div>
+
+<script>
+$.validator.setDefaults({
+	submitHandler: function() {
+		document.forms["changepass_form"].submit();
+	}
+});
+
+$("#changepass_form").validate({
+	rules: {
+		old_password: "required",
+		password: {
+			required: true,
+            minlength: 6
+		},
+		c_password: {
+			required: true,
+            equalTo: "#password"
+		}
+	},
+	messages: {
+	    old_password: "Please enter your old password!",
+		password: {
+			required: "Please enter your password!",
+            minlength: "Password should be minimum 6 length!"
+		},
+		c_password: {
+			required: "Please enter your confirm password!",
+            equalTo: "Password & Confirm password must be match!"
+		}
+	}
+});
+
+setTimeout(function(){ 
+	$(".message-success,.message-error").fadeOut('slow'); 
+}, 3000);
+</script>
