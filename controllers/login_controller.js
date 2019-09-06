@@ -83,6 +83,7 @@ exports.register = function (req, res) {  //
             newUser.mobile = req.body.mobile;
             newUser.email  = req.body.email;
             newUser.password = req.body.password;
+            newUser.gender = '';
             newUser.status = 1;
             newUser.usertype = 1;
             newUser.address = '';
@@ -182,6 +183,7 @@ exports.profileUpdate = function(req, res){
     	req.checkBody("name", "Required").notEmpty();
     	req.checkBody("mobile", "Required").notEmpty();
     	req.checkBody("email", "Required").notEmpty();
+    	req.checkBody("gender", "Required").notEmpty();
     	var errors = req.validationErrors();
     	if(errors){
     		req.flash('error', constant.REQUIRED_FIELDS);
@@ -201,6 +203,7 @@ exports.profileUpdate = function(req, res){
 		    			setdata.name = req.body.name;
 		    			setdata.mobile = req.body.mobile;
 		    			setdata.email = req.body.email;
+		    			setdata.gender = req.body.gender;	 
 		    			setdata.address = req.body.address;	    			
 						session.username = req.body.name;
 						//console.log(util.inspect(setdata, {showHidden: false, depth: null}));
@@ -280,7 +283,7 @@ exports.users= function(req, res){
 	dataObj.title = 'All Users - '+constant.SITE_TITLE;
 	Login.find( function(err, result){		
 	// console.log(result); return false;	
-    	if(err){
+    		if(err){
 				 req.flash('error',constant.MSG_SOMETHING_WRONG);
 				 res.redirect('/dashboard');
 			 } else {			
@@ -292,6 +295,8 @@ exports.users= function(req, res){
 
 	    });	 
 };
+
+
 
 exports.logout = function(req, res){
 	 req.session.destroy();

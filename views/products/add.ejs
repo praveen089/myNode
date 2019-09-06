@@ -1,0 +1,129 @@
+<%- include('../layout') %>
+<div class="ks-column ks-page" style="margin-left:50px;">
+   <div class="ks-page-header">
+      <section class="ks-title">
+         <h3>Add Product</h3>
+		 <div class="ks-controls">
+            <nav class="breadcrumb ks-default">
+               <a class="breadcrumb-item ks-breadcrumb-icon" href="/dashboard">
+               <span class="la la-home ks-icon"></span>
+               </a>
+               <a href="/admin/templates/list" class="breadcrumb-item">Products</a>
+               <span class="breadcrumb-item active" href="#">Add</span>
+            </nav>
+         </div>
+      </section>
+   </div>
+   <div class="ks-page-content">
+      <div class="ks-page-content-body ks-content-nav">         
+         <div class="ks-nav-body">
+		 <%- include('../message.ejs') %>
+            <div class="ks-nav-body-wrapper">
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-lg-12">
+                        <div class="card panel">
+                           <div class="card-block">
+                              <form class="form-horizontal" id="add_form" role="form" action="/products/add" method="post">                             
+                                 <div class="form-group col-lg-6">
+                                    <label>Name*</label>
+                                    <input type="text" name="name" id="name" class="form-control" autocomplete="off" placeholder="Name" value="">
+                                 </div>
+                                 <div class="form-group col-lg-6">
+                                    <label>Category</label>
+                                    <select name="category" id="category" class="form-control">
+                                       <option value="">--Select Category--</option>
+                                       <option value="1">Mobiles</option>
+                                       <option value="2">Laptops</option>
+                                    </select>
+                                 </div>
+                                 <div class="form-group col-lg-6">
+                                    <label>Description*</label>
+                                    <input type="text" name="description" id="description" class="form-control" autocomplete="off" placeholder="Enter description" value="">
+                                 </div>
+                                 <div class="form-group col-lg-6">
+                                    <label>Quantity*</label>
+                                    <input type="text" name="quantity" id="quantity" class="form-control" autocomplete="off" placeholder="Enter quantity" value="">
+                                 </div>
+                                 <div class="form-group col-lg-6">
+                                    <label>Status</label>
+                                    <select name="status" id="status" class="form-control">
+                                       <option value="">--Select Status--</option>
+                                       <option value="1">Active</option>
+                                       <option value="0">InActive</option>
+                                    </select>
+                                 </div>
+                                 <div class="form-group col-lg-6">
+                                    <label>Price*</label>
+                                    <input type="text" name="price" id="price" class="form-control" autocomplete="off" placeholder="Enter price" value="">
+                                 </div>
+
+                                 
+								              
+
+                                 <div class="form-group col-lg-6">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="reset" class="btn btn-outline-primary ks-light">Reset</button>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+$.validator.setDefaults({
+	submitHandler: function() {
+		document.forms["add_form"].submit();
+	}
+});
+
+$("#add_form").validate({
+	rules: {
+		title: "required",
+		description: "required"
+	},
+	messages: {
+	    title: "Please enter the title name!",
+	    description: "Please enter the description!"
+	}
+});
+
+setTimeout(function(){ 
+	$(".message-success,.message-error").fadeOut('slow'); 
+}, 3000);
+</script>
+
+<script src="/admin/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		if($("#description").length > 0){
+			tinymce.init({
+				selector: "textarea#description",
+				theme: "modern",
+				height:300,
+				plugins: [
+					"advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+					"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+					"save table contextmenu directionality emoticons template paste textcolor"
+				],
+				toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons",
+				style_formats: [
+					{title: 'Bold text', inline: 'b'},
+					{title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+					{title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+					{title: 'Example 1', inline: 'span', classes: 'example1'},
+					{title: 'Example 2', inline: 'span', classes: 'example2'},
+					{title: 'Table styles'},
+					{title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+				]
+			});
+		}
+	});
+</script>

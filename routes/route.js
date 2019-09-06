@@ -24,12 +24,13 @@ router.get('/logout', login_controller.logout);
 // a simple test url to check that all of our files are communicating correctly.
 router.get('/test', product_controller.test);
 //router.get('/add', product_controller.product_add);
-router.post('/products/create', product_controller.product_create);
 //router.get('/:id', product_controller.product_details);
 router.put('/products/:id/update', product_controller.product_update);
 router.delete('/:id/delete', product_controller.product_delete);
 
-router.get('/products', product_controller.product_list);
+router.get('/products', product_controller.index);
+router.get('/products/add', product_controller.addProduct);
+router.post('/products/add', product_controller.addProduct);
 router.post('/products/update', product_controller.product_edit);
 router.post('/products/delete', product_controller.product_delete);
 
