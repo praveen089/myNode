@@ -1,0 +1,117 @@
+<%- include('../layout') %>
+<div class="ks-column ks-page" style="margin-left:50px;">
+   <div class="ks-page-header">
+      <section class="ks-title">
+         <h3>What's in your mind, Ask </h3>
+		 <div class="ks-controls">
+            <nav class="breadcrumb ks-default">
+               <a class="breadcrumb-item ks-breadcrumb-icon" href="/dashboard">
+               <span class="la la-home ks-icon"></span>
+               </a>
+               <a href="/blogs/list" class="breadcrumb-item">Blog</a>
+               <span class="breadcrumb-item active" href="#">Add</span>
+            </nav>
+         </div>
+      </section>
+   </div>
+   <div class="ks-page-content">
+      <div class="ks-page-content-body ks-content-nav">         
+         <div class="ks-nav-body">
+		 <%- include('../message.ejs') %>
+            <div class="ks-nav-body-wrapper">
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-lg-12">
+                        <div class="card panel">
+                           <div class="card-block">
+                              <form class="form-horizontal" id="add_form" role="form" action="/blogs/add" method="post">
+
+                                 <div class="form-group col-lg-6">
+                                    <label>Select Subject*</label>
+                                    <select name="subject" id="subject" class="form-control">
+                                       <option value="">--Select Subject--</option>
+                                       <option value="1">Angular</option>
+                                       <option value="2">Laravel</option>
+                                       <option value="3">NodeJs</option>
+                                       <option value="4">PHP</option>                                       
+                                       <option value="5">VueJs</option>
+                                       <option value="6">General</option>
+                                    </select>
+                                 </div>
+
+                                 <div class="form-group col-lg-6">
+                                    <label>Title*</label>
+                                    <input type="text" name="title" id="title" class="form-control" autocomplete="off" placeholder="">
+                                 </div>
+
+                                 <div class="form-group col-lg-6" style="max-width: 100%;">
+                                    <label>Your Question*</label>
+                                    <textarea name="description" id="description" class="form-control" autocomplete="off"></textarea>
+                                 </div>
+								                                       
+                                 <div class="form-group col-lg-6">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="reset" class="btn btn-outline-primary ks-light">Reset</button>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+$.validator.setDefaults({
+	submitHandler: function() {
+		document.forms["add_form"].submit();
+	}
+});
+
+$("#add_form").validate({
+	rules: {
+		title: "required",
+		description: "required"
+	},
+	messages: {
+	    title: "Please enter the title name!",
+	    description: "Please enter the description!"
+	}
+});
+
+setTimeout(function(){ 
+	$(".message-success,.message-error").fadeOut('slow'); 
+}, 3000);
+</script>
+
+<script src="/admin/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		if($("#description").length > 0){
+			tinymce.init({
+				selector: "textarea#description",
+				theme: "modern",
+				height:300,
+				plugins: [
+					"advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+					"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+					"save table contextmenu directionality emoticons template paste textcolor"
+				],
+				toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons",
+				style_formats: [
+					{title: 'Bold text', inline: 'b'},
+					{title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+					{title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+					{title: 'Example 1', inline: 'span', classes: 'example1'},
+					{title: 'Example 2', inline: 'span', classes: 'example2'},
+					{title: 'Table styles'},
+					{title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+				]
+			});
+		}
+	});
+</script>

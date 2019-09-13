@@ -7,6 +7,7 @@ let UserSchema = new Schema({
     email: {type: String, required: true, max: 80},
     password: {type: String, required: true, max: 15},
     gender: {type:String},
+    image: String,
     status: Number,
     usertype: Number,
     address: String,

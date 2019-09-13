@@ -4,8 +4,22 @@ const constant = require('../constant.js');
 const util = require('util')
 var moment = require('moment');
 
+/*configure the image with multer start*/
+var multer = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/users');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '.jpg');
+
+  }
+})
+var upload = multer({ storage: storage }).single('image');
+/*configure the image with multer end*/
+
+
 exports.index= function(req, res){
-		//console.log(req.body);
 	if(req.method == 'POST') {
 		req.checkBody("username", "Required").notEmpty();
 		req.checkBody("password", "Required").notEmpty();
@@ -63,8 +77,7 @@ exports.index= function(req, res){
 	//res.send('Welcome to Controller is working!');
 };
 
-exports.register = function (req, res) {  //
-	
+exports.register = function (req, res) {  
     if(req.method=='POST'){
     	
     	//console.log(req.body); 
@@ -87,6 +100,7 @@ exports.register = function (req, res) {  //
             newUser.status = 1;
             newUser.usertype = 1;
             newUser.address = '';
+            newUser.image = '';
             newUser.createdAt = Date.now();
 		    newUser.updatedAt = Date.now();
 
@@ -131,34 +145,41 @@ exports.profile= function(req, res){
 	// console.log(util.inspect(req.session, false, null, true /* enable colors */)); return false;
 	
 	var moment = require('moment');
-	//session = req.session;
-    let userid = req.session.userid;
-   // console.log(userid);
-    let dataObj = {};
-	dataObj.title = 'Profile - '+constant.SITE_TITLE;
-	if(userid!=''){
-		Login.findById( userid, function(err, result){
-			//console.log('PK--->'+result.name);
-	    	if(err){
-					 req.flash('error',constant.MSG_SOMETHING_WRONG);
-					 res.redirect('/');
-				 } else {
-					dataObj.username = result.name;
-					dataObj.dataUser = result;
-					//console.log(dataObj.username);
-					dataObj.moment = moment;
-					res.render('admin/profile', { dataSet: dataObj });				 
-				 }
+	if(req.session.userid!==undefined)	{
+		    let userid = req.session.userid;
+		   // console.log(userid);
+		    let dataObj = {};
+			dataObj.title = 'Profile - '+constant.SITE_TITLE;
+			if(userid!=''){
+				Login.findById( userid, function(err, result){
+					//console.log('PK--->'+result.name);
+			    	if(err){
+							 req.flash('error',constant.MSG_SOMETHING_WRONG);
+							 res.redirect('/');
+						 } else {
+							dataObj.username = result.name;
+							dataObj.dataUser = result;
+							//console.log(dataObj.username);
+							dataObj.moment = moment;
+							res.render('admin/profile', { dataSet: dataObj });				 
+						 }
 
-	    });
+			    });
+			}
+	}else{
+		res.redirect('/logout');
 	}
     
 };
 	
 exports.profileEdit = function(req, res){
 	var moment = require('moment');
+	//console.log("UserOd->"+req.session.userid);
+	if(req.session.userid!==undefined)	{		 	 
+		//console.log("IN Condition");
 	session = req.session;
 	let userid = req.session.userid;
+	//console.log("session->"+req.session);
 	let dataObj = {};
 	dataObj.title = 'Edit Profile - '+constant.SITE_TITLE;
 	    Login.findById( userid, function(err, result){		    	
@@ -166,7 +187,7 @@ exports.profileEdit = function(req, res){
 					 req.flash('error',constant.MSG_SOMETHING_WRONG);
 					 res.redirect('/');
 				 } else {
-				 	console.log(util.inspect(result, {showHidden: false, depth: null}));
+				 	//console.log(util.inspect(result, {showHidden: false, depth: null}));				 	
 					dataObj.name = result.name;
 					dataObj.dataUser = result;				
 					dataObj.moment = moment;
@@ -176,10 +197,15 @@ exports.profileEdit = function(req, res){
 				 }
 
 	    });
+	 } else {
+	 	console.log('No Session');
+	 	res.redirect('/logout');
+	 }   
 	
 };
 exports.profileUpdate = function(req, res){
-    	//console.log(req.body); 
+	//upload.single('image');
+    	//console.log(req.body);  return false;
     	req.checkBody("name", "Required").notEmpty();
     	req.checkBody("mobile", "Required").notEmpty();
     	req.checkBody("email", "Required").notEmpty();
@@ -194,6 +220,24 @@ exports.profileUpdate = function(req, res){
 			let userid = req.session.userid;
 	    	let data = [];
 	    	data.title = 'Edit Profile ';
+
+	    	upload(req, res, function (err) {
+		        if (err instanceof multer.MulterError) {
+		          // A Multer error occurred when uploading.
+		          req.flash('error','A Multer error occurred when uploading.');
+		          res.redirect('/uploads');
+		        }else if (err) {
+		          // An unknown error occurred when uploading.
+		          req.flash('error','An unknown error occurred when uploading.');
+		          res.redirect('/uploads');
+		        }
+		        //req.flash('success', req.file.filename+' file Upload Successfuly.->');
+		       // res.redirect('/uploads');
+
+		        });
+
+
+
 	    	if(userid!=''){
 		    	Login.findById( userid, function(err, setdata){	    		
 		    		if(err){
@@ -206,8 +250,9 @@ exports.profileUpdate = function(req, res){
 		    			setdata.gender = req.body.gender;	 
 		    			setdata.address = req.body.address;	    			
 						session.username = req.body.name;
+						setdata.image =  req.file.filename;
 						//console.log(util.inspect(setdata, {showHidden: false, depth: null}));
-		    			setdata.save(function(){
+		    			setdata.save(function(){		    				 
 		    				req.flash('success', constant.MSG_SAVED_RECORD);
 		    				res.redirect('/profile/edit');
 		    			});

@@ -1,0 +1,73 @@
+<%- include('../layout') %>
+<div class="ks-column ks-page" style="margin-left:50px;">
+   <div class="ks-page-header">
+      <section class="ks-title">
+         <h3>File/Image Uploads </h3>
+		 <div class="ks-controls">
+            <nav class="breadcrumb ks-default">
+               <a class="breadcrumb-item ks-breadcrumb-icon" href="/dashboard">
+               <span class="la la-home ks-icon"></span>
+               </a>
+               <a href="/uploads" class="breadcrumb-item">Uploads</a>
+               <span class="breadcrumb-item active" href="#">Add</span>
+            </nav>
+         </div>
+      </section>
+   </div>
+   <div class="ks-page-content">
+      <div class="ks-page-content-body ks-content-nav">         
+         <div class="ks-nav-body">
+		 <%- include('../message.ejs') %>
+            <div class="ks-nav-body-wrapper">
+               <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-lg-12">
+                        <div class="card panel">
+                           <div class="card-block">
+                              <form class="form-horizontal" id="add_form" role="form" action="/uploads" method="post" enctype="multipart/form-data">
+
+                                
+
+                                 <div class="form-group row">
+                                    <div class="col-lg-4">
+                                          <label>Profile Image</label>
+                                          <button class="btn btn-primary ks-btn-file">
+                                          <span class="la la-cloud-upload ks-icon"></span>
+                                          <span class="ks-text">Choose file</span>
+                                          <input type="file" name="image" id="image"
+                                             data-validation="mime size required"
+                                             data-validation-allowing="jpg, png"
+                                             data-validation-max-size="300kb"
+                                             data-validation-error-msg-required="No image selected">
+                                          </button>                                 
+                                       </div>                       
+                                 </div>          
+
+                              
+                                 								                                       
+                                 <div class="form-group col-lg-6">
+                                    
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button type="reset" class="btn btn-outline-primary ks-light">Reset</button>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+$.validator.setDefaults({
+   submitHandler: function() {
+      document.forms["add_form"].submit();
+   }
+});
+
+
+</script>
